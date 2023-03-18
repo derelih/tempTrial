@@ -1,0 +1,98 @@
+@model MyApp.ViewModels.ManageViewModel
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <h3>Change your account settings</h3>
+            <hr />
+            <div class="form-horizontal">
+                <h4>Your profile</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(m => m.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(m => m.Email)
+                    </dd>
+                </dl>
+                <hr />
+                <p>
+                    @Html.ActionLink("Edit profile", "EditProfile") |
+                    <a href="@Url.Action("ChangePassword", "Manage")">Change password</a>
+                </p>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section>
+            <h3>View your upcoming appointments</h3>
+            <hr />
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Appointment date
+                            </th>
+                            <th>
+                                Doctor
+                            </th>
+                            <th>
+                                Reason for visit
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model.UpcomingAppointments)
+                        {
+                            <tr>
+                                <td>
+                                    @appointment.AppointmentDateTime.ToShortDateString()
+                                </td>
+                                <td>
+                                    @appointment.DoctorName
+                                </td>
+                                <td>
+                                    @appointment.ReasonForVisit
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <p>
+                @Html.ActionLink("View all appointments", "Appointments")
+            </p>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section>
+            <h3>Request a new appointment</h3>
+            <hr />
+            @using (Html.BeginForm("RequestAppointment", "Manage", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RequestedAppointment.AppointmentDateTime, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.RequestedAppointment.AppointmentDateTime, new { @class = "form-control", placeholder = "MM/DD/YYYY hh:mm AM/PM" })
+                    @Html.ValidationMessageFor(m => m.RequestedAppointment.AppointmentDateTime, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RequestedAppointment.DoctorId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.RequestedAppointment.DoctorId, new SelectList(Model.AvailableDoctors, "Value", "Text"), "-- Select a doctor --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RequestedAppointment.DoctorId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RequestedAppointment.ReasonForVisit, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.RequestedAppointment.ReasonForVisit, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RequestedAppointment.ReasonForVisit, "", new { @class = "
+
