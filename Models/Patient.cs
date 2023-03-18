@@ -16,3 +16,14 @@ namespace MyApp.Models
         [Required(ErrorMessage = "Please enter a last name")]
         [StringLength(50)]
         public string LastName { get; set; }
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Display(Name = "Phone")]
+        [DataType(DataType.PhoneNumber)]
+        public string Phone { get; set; }
+
+        public virtual ICollection<Appointment> Appointments { get; set; }
+    }
+}
