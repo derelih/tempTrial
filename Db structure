@@ -1,0 +1,41 @@
+Appointment Table
+
+AppointmentID (int, primary key)
+PatientID (int, foreign key)
+DoctorID (int, foreign key)
+Date (datetime)
+Reason (nvarchar)
+Notes (nvarchar)
+
+Patient Table
+
+PatientID (int, primary key)
+FirstName (nvarchar)
+LastName (nvarchar)
+DateOfBirth (date)
+Gender (nvarchar)
+Address (nvarchar)
+Phone (nvarchar)
+
+Doctor Table
+
+DoctorID (int, primary key)
+FirstName (nvarchar)
+LastName (nvarchar)
+Specialty (nvarchar)
+
+VitalSigns Table
+
+VitalSignsID (int, primary key)
+AppointmentID (int, foreign key)
+HeartRate (int)
+BloodPressure (nvarchar)
+Temperature (decimal)
+RespiratoryRate (int)
+
+Diagnosis Table
+
+DiagnosisID (int, primary key)
+AppointmentID (int, foreign key)
+Description (nvarchar)
+Code (nvarchar)
